@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Formulário</title>
+</head>
+
+<body>
+  <form id="myForm">
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id"><br><br>
+    <label for="name">Nome:</label>
+    <input type="text" id="name" name="name"><br><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+    <input type="submit" value="Enviar">
+  </form>
+
+  <script>
+    document.getElementById('myForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const id = document.getElementById('id').value;
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+
+      fetch('/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id, name, email })
+      })
+        .then(response => response.text())
+        .then(data => {
+          console.log(data);
+          alert('Dados enviados com sucesso!');
+        })
+        .catch(error => {
+          console.error('Erro:', error);
+          alert('Erro ao enviar dados');
+        });
+    });
+  </script>
+</body>
+
+</html>
